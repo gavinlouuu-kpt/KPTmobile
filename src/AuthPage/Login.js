@@ -40,6 +40,10 @@ export default function Login({ navigation }) {
     navigation.navigate('Register')
   }
 
+  const handleResetPassword = () => {
+    navigation.navigate('ForgetPassword')
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -48,7 +52,6 @@ export default function Login({ navigation }) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1 }}>
           <View style={{ flex: 5 }}>
-            {/* <Text>Icon</Text> */}
           </View>
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <Text style={{ fontSize: 30, fontWeight: "bold" }}>AppNameAppName</Text>
@@ -71,7 +74,7 @@ export default function Login({ navigation }) {
             </FormControl>
             <View style={{ marginVertical: 20, flexDirection: "row", justifyContent: "space-between" }}>
               <View style={{ justifyContent: "center", alignItems: "flex-start" }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleResetPassword}>
                   <Text>
                     Forget Password?
                   </Text>
