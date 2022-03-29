@@ -1,0 +1,39 @@
+{
+    "project_info": {
+      "project_number": "719684541070",
+      "project_id": "kingphasetech",
+      "storage_bucket": "kingphasetech.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:719684541070:android:9a16fd9316b60ef69c47df",
+          "android_client_info": {
+            "package_name": "com.kptmobile"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "719684541070-2qpvo05qq1rpvbnc4r4imkjsh6ag6q7t.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyBf5K9hl3OUzFLz2LO1wjrAASjNq0fR5Gc"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "719684541070-2qpvo05qq1rpvbnc4r4imkjsh6ag6q7t.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
