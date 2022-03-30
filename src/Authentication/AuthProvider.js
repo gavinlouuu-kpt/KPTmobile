@@ -17,6 +17,10 @@ export const AuthProvider = ({ children }) => {
 
     const Logout = async () => await auth().signOut();
 
+    const PasswordReset = async email => {
+        await auth().sendPasswordResetEmail(email)
+    }
+
     useEffect(() => {
         const unsubscribe = auth().onAuthStateChanged(user => {
             setCurrentUser(user);
@@ -33,6 +37,7 @@ export const AuthProvider = ({ children }) => {
         Login,
         Register,
         Logout,
+        PasswordReset
     };
 
     return (

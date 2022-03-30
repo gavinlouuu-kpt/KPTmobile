@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 import { Input, FormControl, Button } from "native-base";
+import { useHeaderHeight } from '@react-navigation/elements';
 
 import { useAuth } from "../Authentication/AuthProvider"
 
@@ -8,11 +9,12 @@ export default function Login({ navigation }) {
 
   const CallAlert = Message => {
     Alert.alert('Opps, somethings wrong!', Message, [
-      {text: 'OK', style: 'cancel'},
+      { text: 'OK', style: 'cancel' },
     ]);
   };
 
   const { Login } = useAuth();
+  const headerHeight = useHeaderHeight();
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -45,12 +47,13 @@ export default function Login({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
+    <View style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={headerHeight}
+          style={{ flex: 1, backgroundColor: "#ffffff" }}
+        >
           <View style={{ flex: 5 }}>
           </View>
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -92,8 +95,8 @@ export default function Login({ navigation }) {
               </View>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </View>
   )
 }

@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import { View, Text, Dimensions, Animated, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { Input, FormControl, Button } from "native-base";
 
 import { useAuth } from "../Authentication/AuthProvider";
+import { useHeaderHeight } from '@react-navigation/elements';
+
+import { ValidateEmail } from "../utils";
 
 export default function Register() {
 
   const { Register } = useAuth();
+  const headerHeight = useHeaderHeight();
+
+  const slideAnime = useRef(new Animated.Value(0)).current;
+
+  const [height] = useState(Dimensions.get('window').height)
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false)
@@ -14,13 +22,6 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [hyperText, setHyperText] = useState("")
-
-  const ValidateEmail = (email) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      return (true)
-    }
-    return (false)
-  }
 
   const handleSubmit = async () => {
     if (email === "" || password === "" || confirmPassword === "") {
@@ -51,46 +52,92 @@ export default function Register() {
     // await Register(email, password)
   }
 
+  useEffect(() => {
+    Animated.timing(slideAnime, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true
+    }).start();
+  }, [slideAnime])
+
   return (
-    <View style={{ justifyContent: "center", alignItems: "flex-start" }}>
-      <FormControl isRequired isInvalid={emailError}>
-        <Input variant="underlined" placeholder="example@example.com" px={0} onChangeText={(Text) => setEmail(Text)} isInvalid={emailError} />
-        {emailError ?
-          <FormControl.ErrorMessage>
-            Invalid Email! Please Try Again!
-          </FormControl.ErrorMessage> :
-          <FormControl.HelperText>
-            Email
-          </FormControl.HelperText>}
-      </FormControl>
-      <FormControl isRequired isInvalid={passwordError}>
-        <Input type="password" variant="underlined" placeholder="password" px={0} onChangeText={(Text) => setPassword(Text)} />
-        {passwordError ?
-          <FormControl.ErrorMessage>
-            Password not the same!
-          </FormControl.ErrorMessage> :
-          <FormControl.HelperText>
-            Password
-          </FormControl.HelperText>}
-      </FormControl>
-      <FormControl isRequired isInvalid={passwordError}>
-        <Input type="password" variant="underlined" placeholder="ConfirmPassword" px={0} onChangeText={(Text) => setConfirmPassword(Text)} />
-        {passwordError ?
-          <FormControl.ErrorMessage>
-            Password not the same!
-          </FormControl.ErrorMessage> :
-          <FormControl.HelperText>
-            ConfirmPassword
-          </FormControl.HelperText>}
-      </FormControl>
-      {hyperText === "" ?
-        <></> :
-        <Text>
-          {hyperText}
-        </Text>}
-      <Button size="md" onPress={handleSubmit}>
-        Register
-      </Button>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{ flex: 1, backgroundColor: "#ffffff", justifyContent: "flex-end" }}>
+        <Animated.View style={{
+          transform: [
+            {
+              translateY: slideAnime.interpolate({
+                inputRange: [0, 1],
+                outputRange: [600, 0]
+              })
+            }
+          ],
+          flex: 0.99,
+          backgroundColor: "#ffffff",
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 6,
+          },
+          shadowOpacity: 0.37,
+          shadowRadius: 7.49,
+          elevation: 12,
+        }}>
+          <KeyboardAvoidingView
+            keyboardVerticalOffset={headerHeight}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}
+          >
+            <View style={{ flex: 1, margin: 20, }}>
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontSize: 24, fontWeight: "bold" }}>Registration</Text>
+                <FormControl isRequired isInvalid={emailError}>
+                  <Input variant="underlined" placeholder="example@example.com" px={0} onChangeText={(Text) => setEmail(Text)} isInvalid={emailError} />
+                  {emailError ?
+                    <FormControl.ErrorMessage>
+                      Invalid Email! Please Try Again!
+                    </FormControl.ErrorMessage> :
+                    <FormControl.HelperText>
+                      Email
+                    </FormControl.HelperText>}
+                </FormControl>
+                <FormControl isRequired isInvalid={passwordError}>
+                  <Input type="password" variant="underlined" placeholder="password" px={0} onChangeText={(Text) => setPassword(Text)} />
+                  {passwordError ?
+                    <FormControl.ErrorMessage>
+                      Password not the same!
+                    </FormControl.ErrorMessage> :
+                    <FormControl.HelperText>
+                      Password
+                    </FormControl.HelperText>}
+                </FormControl>
+                <FormControl isRequired isInvalid={passwordError}>
+                  <Input type="password" variant="underlined" placeholder="ConfirmPassword" px={0} onChangeText={(Text) => setConfirmPassword(Text)} />
+                  {passwordError ?
+                    <FormControl.ErrorMessage>
+                      Password not the same!
+                    </FormControl.ErrorMessage> :
+                    <FormControl.HelperText>
+                      ConfirmPassword
+                    </FormControl.HelperText>}
+                </FormControl>
+                {hyperText === "" ?
+                  <></> :
+                  <Text>
+                    {hyperText}
+                  </Text>}
+              </View>
+              <View style={{ alignSelf: "flex-end" }}>
+                <Button size="md" onPress={handleSubmit}>
+                  Register
+                </Button>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </Animated.View>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
