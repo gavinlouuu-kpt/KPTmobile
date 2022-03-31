@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, Dimensions, Animated, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Text, Animated, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { Input, FormControl, Button } from "native-base";
 
 import { useAuth } from "../Authentication/AuthProvider";
 import { useHeaderHeight } from '@react-navigation/elements';
 
-import { ValidateEmail } from "../utils";
+import { ValidateEmail, replaceString } from "../utils";
 
 export default function Register() {
 
@@ -14,42 +14,34 @@ export default function Register() {
 
   const slideAnime = useRef(new Animated.Value(0)).current;
 
-  const [height] = useState(Dimensions.get('window').height)
-
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false)
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [hyperText, setHyperText] = useState("")
+  const [hyperText, setHyperText] = useState(null)
 
   const handleSubmit = async () => {
     if (email === "" || password === "" || confirmPassword === "") {
       return setHyperText("Column must not empty!")
     } else {
-      setHyperText("")
+      setHyperText(null)
       if (!ValidateEmail(email)) {
         return setEmailError(!ValidateEmail(email))
       }
       if (password !== confirmPassword) {
         return setPasswordError(true)
-      } else {
-        setPasswordError(false)
       }
+      setPasswordError(false)
+      setEmailError(false)
       try {
         await Register(
           email, password
         );
       } catch (error) {
-        switch (error.code) {
-          case 'auth/invalid-email':
-            return setHyperText('Invalid Email');
-          case 'auth/email-already-in-use':
-            return setHyperText('Email already in use!');
-        }
+        return setHyperText(replaceString(error.code, error.message))
       }
     }
-    // await Register(email, password)
   }
 
   useEffect(() => {
@@ -90,7 +82,7 @@ export default function Register() {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={{ flex: 1 }}
           >
-            <View style={{ flex: 1, margin: 20, }}>
+            <View style={{ flex: 1, margin: 20 }}>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 24, fontWeight: "bold" }}>Registration</Text>
                 <FormControl isRequired isInvalid={emailError}>
@@ -123,11 +115,11 @@ export default function Register() {
                       ConfirmPassword
                     </FormControl.HelperText>}
                 </FormControl>
-                {hyperText === "" ?
-                  <></> :
-                  <Text>
+                <FormControl isInvalid={hyperText !== null}>
+                  <FormControl.ErrorMessage>
                     {hyperText}
-                  </Text>}
+                  </FormControl.ErrorMessage>
+                </FormControl>
               </View>
               <View style={{ alignSelf: "flex-end" }}>
                 <Button size="md" onPress={handleSubmit}>

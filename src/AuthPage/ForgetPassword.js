@@ -5,7 +5,7 @@ import { useHeaderHeight } from '@react-navigation/elements';
 
 import { useAuth } from "../Authentication/AuthProvider";
 
-import { ValidateEmail } from "../utils";
+import { ValidateEmail, replaceString } from "../utils";
 
 export default function ForgetPassword({ navigation }) {
 
@@ -24,11 +24,6 @@ export default function ForgetPassword({ navigation }) {
     setIsOpen(false)
     navigation.goBack();
   };
-
-  const replaceString = (code, string) => {
-    const newCode = "[" + code + "] "
-    return string.replace(newCode, '')
-  }
 
   const handleSubmit = async () => {
     if (ValidateEmail(email)) {

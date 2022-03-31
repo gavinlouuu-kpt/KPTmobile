@@ -5,44 +5,36 @@ import { useHeaderHeight } from '@react-navigation/elements';
 
 import { useAuth } from "../Authentication/AuthProvider"
 
-export default function Login({ navigation }) {
+import { replaceString } from "../utils";
 
-  const CallAlert = Message => {
-    Alert.alert('Opps, somethings wrong!', Message, [
-      { text: 'OK', style: 'cancel' },
-    ]);
-  };
+export default function Login({ navigation }) {
 
   const { Login } = useAuth();
   const headerHeight = useHeaderHeight();
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const handleLogin = async () => {
     if (email !== '' && password !== '') {
       try {
         await Login(email, password);
       } catch (error) {
-        switch (error.code) {
-          case 'auth/invalid-email':
-            return CallAlert('Invalid Email');
-          case 'auth/wrong-password':
-            return CallAlert('Email/Password Wrong!');
-          case 'auth/user-not-found':
-            return CallAlert('Email/Password Wrong!');
-        }
+        return setErrorMessage(replaceString(error.code, error.message))
       }
     } else {
-      CallAlert('Email or Password is empty!');
+      setErrorMessage('Email or Password is empty!');
     }
   }
 
   const handleRegister = () => {
+    setErrorMessage(null)
     navigation.navigate('Register')
   }
 
   const handleResetPassword = () => {
+    setErrorMessage(null)
     navigation.navigate('ForgetPassword')
   }
 
@@ -74,6 +66,11 @@ export default function Login({ navigation }) {
               <FormControl.HelperText>
                 Password
               </FormControl.HelperText>
+            </FormControl>
+            <FormControl isInvalid={errorMessage !== null}>
+              <FormControl.ErrorMessage>
+                {errorMessage}
+              </FormControl.ErrorMessage>
             </FormControl>
             <View style={{ marginVertical: 20, flexDirection: "row", justifyContent: "space-between" }}>
               <View style={{ justifyContent: "center", alignItems: "flex-start" }}>
