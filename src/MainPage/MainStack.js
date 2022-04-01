@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
 
-    const { currentUser } = useAuth();
+    const { userStat } = useAuth();
 
     return (
         <Stack.Navigator initialRouteName="Main"
@@ -25,7 +25,7 @@ export default function MainStack() {
                 headerRight: () => (
                     <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
                         <Avatar size="sm" bgColor={"gray.900"} _text={{ color: "white" }}>
-                            {currentUser.email.charAt(0)}
+                            {userStat.username.charAt(0)}
                         </Avatar>
                     </TouchableOpacity>
                 ),
@@ -40,6 +40,9 @@ export default function MainStack() {
                                 size={24}
                             />
                         </TouchableOpacity>
+                    ),
+                    headerRight: () => (
+                        <></>
                     ),
                 })}
             />

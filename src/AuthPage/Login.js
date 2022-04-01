@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Image, Dimensions } from 'react-native'
 import { Input, FormControl, Button } from "native-base";
 import { useHeaderHeight } from '@react-navigation/elements';
 
@@ -8,6 +8,8 @@ import { useAuth } from "../Authentication/AuthProvider"
 import { replaceString } from "../utils";
 
 export default function Login({ navigation }) {
+
+  const windowWidth = Dimensions.get('window').width;
 
   const { Login } = useAuth();
   const headerHeight = useHeaderHeight();
@@ -46,7 +48,10 @@ export default function Login({ navigation }) {
           keyboardVerticalOffset={headerHeight}
           style={{ flex: 1, backgroundColor: "#ffffff" }}
         >
-          <View style={{ flex: 5 }}>
+          <View style={{ flex: 5}}>
+            {/* <View style={{ backgroundColor: "#54595F", justifyContent: "center", paddingHorizontal: 10 }}>
+              <Image source={require('../image/kptw.png')} style={{ width: windowWidth - 20 }} resizeMode="contain" />
+            </View> */}
           </View>
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <Text style={{ fontSize: 30, fontWeight: "bold" }}>AppNameAppName</Text>

@@ -9,7 +9,7 @@ import { ValidateEmail, replaceString } from "../utils";
 
 export default function Register() {
 
-  const { Register } = useAuth();
+  const { Register, AddUser } = useAuth();
   const headerHeight = useHeaderHeight();
 
   const slideAnime = useRef(new Animated.Value(0)).current;
@@ -19,6 +19,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [username, setUsername] = useState("")
   const [hyperText, setHyperText] = useState(null)
 
   const handleSubmit = async () => {
@@ -35,10 +36,12 @@ export default function Register() {
       setPasswordError(false)
       setEmailError(false)
       try {
-        await Register(
+        const account = await Register(
           email, password
         );
+        await AddUser(account, username, email)
       } catch (error) {
+        console.log(error)
         return setHyperText(replaceString(error.code, error.message))
       }
     }
@@ -114,6 +117,12 @@ export default function Register() {
                     <FormControl.HelperText>
                       ConfirmPassword
                     </FormControl.HelperText>}
+                </FormControl>
+                <FormControl isRequired >
+                  <Input variant="underlined" placeholder="username" px={0} onChangeText={(Text) => setUsername(Text)} />
+                  <FormControl.HelperText>
+                    Username
+                  </FormControl.HelperText>
                 </FormControl>
                 <FormControl isInvalid={hyperText !== null}>
                   <FormControl.ErrorMessage>
