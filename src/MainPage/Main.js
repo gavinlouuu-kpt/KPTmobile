@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
+import database from '@react-native-firebase/database';
 
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import DeviceComponent from './DeviceComponent';
 
 export default function Main({ navigation }) {
@@ -21,6 +23,14 @@ export default function Main({ navigation }) {
             setBreathtext("Click & Breath")
             setShowLevel(false)
         }
+    }
+
+    const handleCreateClass = async () => {
+        navigation.navigate("ClassInstructor")
+        // database()
+        //     .ref('/').update({
+        //         time: 2
+        //     })
     }
 
     return (
@@ -94,17 +104,21 @@ export default function Main({ navigation }) {
                     <View style={{ marginHorizontal: 10, marginTop: 10, marginBottom: 5 }}>
                         <Text style={{ fontSize: 24, fontWeight: "700", lineHeight: 32, letterSpacing: 1 }}>Heart Rate</Text>
                     </View>
-                    <View style={{ marginHorizontal: 20 }}>
-                        <Text style={{ fontSize: 14, fontWeight: "500", lineHeight: 22, letterSpacing: 0.25 }}>current</Text>
-                        <View style={{ flexDirection: "row" }}>
-                            <Text style={{ fontSize: 48, fontWeight: "bold", lineHeight: 50, letterSpacing: 1, fontStyle: "italic" }}>999</Text>
-                            <View style={{ justifyContent: "center", alignItems: "center" }}>
-                                <MaterialCommunityIconsIcon
-                                    name="heart-outline"
-                                    size={24}
-                                />
-                                <Text style={{ fontSize: 14, fontWeight: "500", lineHeight: 22, letterSpacing: 0.25 }}>BPM</Text>
+                    <View style={{ marginHorizontal: 20, flexDirection: "row" }}>
+                        <View style={{ flex: 0.4 }}>
+                            <Text style={{ fontSize: 14, fontWeight: "500", lineHeight: 22, letterSpacing: 0.25 }}>current</Text>
+                            <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                                <Text style={{ fontSize: 48, fontWeight: "bold", lineHeight: 50, letterSpacing: 1, fontStyle: "italic" }}>123</Text>
+                                <View style={{ justifyContent: "center", alignItems: "center" }}>
+                                    <MaterialCommunityIconsIcon
+                                        name="heart-outline"
+                                        size={24}
+                                    />
+                                    <Text style={{ fontSize: 14, fontWeight: "500", lineHeight: 22, letterSpacing: 0.25 }}>BPM</Text>
+                                </View>
                             </View>
+                        </View>
+                        <View style={{ flex: 0.6 }}>
                         </View>
                     </View>
                 </View>
@@ -151,13 +165,15 @@ export default function Main({ navigation }) {
 
                         elevation: 5,
                     }}>
-                    <View style={{ margin: 10, flex: 1, justifyContent: "flex-end" }}>
-                        <View style={{ position: "relative" }}>
-                            <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "50%", width: "65%", position: "absolute", marginTop: "5%" }} />
-                            <Text style={{ fontSize: 32, fontWeight: "bold", fontStyle: "italic", lineHeight: 34, letterSpacing: 1 }}>Create</Text>
+                    <TouchableWithoutFeedback onPress={handleCreateClass}>
+                        <View style={{ margin: 10, flex: 1, justifyContent: "flex-end" }}>
+                            <View style={{ position: "relative" }}>
+                                <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "50%", width: "65%", position: "absolute", marginTop: "5%" }} />
+                                <Text style={{ fontSize: 32, fontWeight: "bold", fontStyle: "italic", lineHeight: 34, letterSpacing: 1 }}>Create</Text>
+                            </View>
+                            <Text style={{ fontSize: 32, fontWeight: "bold", lineHeight: 34, letterSpacing: 1 }}>a Class</Text>
                         </View>
-                        <Text style={{ fontSize: 32, fontWeight: "bold", lineHeight: 34, letterSpacing: 1 }}>a Class</Text>
-                    </View>
+                    </TouchableWithoutFeedback>
                 </View>
 
             </View>

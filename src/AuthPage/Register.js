@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, Animated, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import { Input, FormControl, Button } from "native-base";
+import { Input, FormControl, Button, Radio } from "native-base";
 
 import { useAuth } from "../Authentication/AuthProvider";
 import { useHeaderHeight } from '@react-navigation/elements';
@@ -20,6 +20,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [username, setUsername] = useState("")
+  const [usergroup, setUsergroup] = useState("Student")
   const [hyperText, setHyperText] = useState(null)
 
   const handleSubmit = async () => {
@@ -39,7 +40,7 @@ export default function Register() {
         const account = await Register(
           email, password
         );
-        await AddUser(account, username, email)
+        await AddUser(account, username, email, usergroup)
       } catch (error) {
         console.log(error)
         return setHyperText(replaceString(error.code, error.message))
@@ -123,6 +124,19 @@ export default function Register() {
                   <FormControl.HelperText>
                     Username
                   </FormControl.HelperText>
+                </FormControl>
+                <FormControl style={{ flexDirection: "row", }}>
+                  <FormControl.HelperText>
+                    User's Group:
+                  </FormControl.HelperText>
+                  <Radio.Group name="userSelect" defaultValue='Student' style={{ flexDirection: "row" }} onChange={value => setUsergroup(value)}>
+                    <Radio value="Student" m={1} size="sm">
+                      Student
+                    </Radio>
+                    <Radio value="Instructor" m={1} size="sm">
+                      Instructor
+                    </Radio>
+                  </Radio.Group>
                 </FormControl>
                 <FormControl isInvalid={hyperText !== null}>
                   <FormControl.ErrorMessage>

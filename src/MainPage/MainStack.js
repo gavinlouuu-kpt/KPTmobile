@@ -10,6 +10,7 @@ import { useAuth } from '../Authentication/AuthProvider';
 
 import Main from "./Main"
 import Profile from './Profile';
+import ClassInstructor from './ClassInstructor';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,14 @@ export default function MainStack() {
             screenOptions={({ navigation }) => ({
                 headerShadowVisible: false,
                 title: '',
+                headerLeft: () => (
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialCommunityIconsIcon
+                            name="chevron-left"
+                            size={24}
+                        />
+                    </TouchableOpacity>
+                ),
                 headerRight: () => (
                     <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
                         <Avatar size="sm" bgColor={"gray.900"} _text={{ color: "white" }}>
@@ -30,22 +39,19 @@ export default function MainStack() {
                     </TouchableOpacity>
                 ),
             })}>
-            <Stack.Screen name="Main" component={Main} />
+            <Stack.Screen name="Main" component={Main}
+                options={{
+                    headerLeft: () => <></>,
+                }}
+            />
             <Stack.Screen name="Profile" component={Profile}
-                options={({ navigation }) => ({
-                    headerLeft: () => (
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <MaterialCommunityIconsIcon
-                                name="chevron-left"
-                                size={24}
-                            />
-                        </TouchableOpacity>
-                    ),
+                options={{
                     headerRight: () => (
                         <></>
                     ),
-                })}
+                }}
             />
+            <Stack.Screen name="ClassInstructor" component={ClassInstructor} />
         </Stack.Navigator>
     )
 }

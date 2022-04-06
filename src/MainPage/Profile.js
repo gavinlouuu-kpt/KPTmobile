@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useState, useRef, useEffect } from 'react'
+import { View, Text, TouchableOpacity, Animated } from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -13,20 +13,78 @@ import History from './Profile/History';
 
 export default function Profile() {
 
+
   const { userStat } = useAuth();
+
+  const slideAnime = useRef(new Animated.Value(0)).current;
 
   const [panelIndex, setPanelIndex] = useState(0)
 
   const renderPanel = () => {
     switch (panelIndex) {
       case 1:
-        return <Device />
+        return (
+          <Animated.View style={{
+            transform: [
+              {
+                translateY: slideAnime.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [300, 0]
+                })
+              }
+            ],
+            flex: 1
+          }}>
+            <Device />
+          </Animated.View>
+        )
       case 2:
-        return <Setting />
+        return (
+          <Animated.View style={{
+            transform: [
+              {
+                translateY: slideAnime.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [300, 0]
+                })
+              }
+            ],
+            flex: 1
+          }}>
+            <Setting />
+          </Animated.View>
+        )
       default:
-        return <History />
+        return (
+          <Animated.View style={{
+            transform: [
+              {
+                translateY: slideAnime.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [300, 0]
+                })
+              }
+            ],
+            flex: 1
+          }}>
+            <History />
+          </Animated.View>
+        )
     }
   }
+
+  useEffect(() => {
+    Animated.timing(slideAnime, {
+      toValue: 0,
+      duration: 400,
+      useNativeDriver: true
+    }).reset();
+    Animated.timing(slideAnime, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true
+    }).start();
+  }, [slideAnime, panelIndex])
 
   return (
     <View style={{ flex: 1 }}>

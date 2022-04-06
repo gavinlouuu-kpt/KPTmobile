@@ -25,14 +25,15 @@ export const AuthProvider = ({ children }) => {
         await auth().sendPasswordResetEmail(email)
     }
 
-    const AddUser = (user, username, email) => {
+    const AddUser = (user, username, email, group) => {
         const newUsername = username === "" ? "user" : username
         firestore().collection("userStat").doc(user.user.uid).set(
             {
                 createdAt: firestore.FieldValue.serverTimestamp(),
                 id: user.user.uid,
                 username: newUsername,
-                email: email
+                email: email,
+                group: group
             }, {
             merge: true
         }
@@ -69,7 +70,7 @@ export const AuthProvider = ({ children }) => {
         Register,
         Logout,
         PasswordReset,
-        AddUser
+        AddUser,
     };
 
     return (
