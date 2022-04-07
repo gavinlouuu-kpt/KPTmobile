@@ -10,7 +10,8 @@ import { useAuth } from '../Authentication/AuthProvider';
 
 import Main from "./Main"
 import Profile from './Profile';
-import ClassInstructor from './ClassInstructor';
+import ClassInstructor from './Class/ClassInstructor';
+import ClassMain from "./Class/ClassMain";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,7 @@ export default function MainStack() {
                 }}
             />
             <Stack.Screen name="ClassInstructor" component={ClassInstructor} />
+            <Stack.Screen name="ClassMain" component={ClassMain} />
         </Stack.Navigator>
     )
 }

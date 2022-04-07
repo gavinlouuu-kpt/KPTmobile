@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
 
 const AuthContext = createContext();
 
@@ -12,6 +14,8 @@ export const AuthProvider = ({ children }) => {
         username: "Loading",
     });
     const [loading, setLoading] = useState(true);
+
+    const database = firebase.app().database('https://kingphasetech-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
     const Login = async (email, password) =>
         await auth().signInWithEmailAndPassword(email, password);
@@ -66,6 +70,7 @@ export const AuthProvider = ({ children }) => {
     const value = {
         currentUser,
         userStat,
+        database,
         Login,
         Register,
         Logout,
