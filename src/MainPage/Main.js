@@ -21,7 +21,7 @@ export default function Main({ navigation }) {
             <KetonesBreath />
             <View
                 style={{
-                    flex: 1.3,
+                    height: 130,
                     backgroundColor: "#ffffff",
                     // margin: 10,
                     marginHorizontal: 10,
