@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, Platform, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { View } from 'react-native';
 
 import { useAuth } from '../../Authentication/AuthProvider';
 
-import { Input, Button } from 'native-base';
 
 import StudentLogin from './StudentLogin';
 import ClassResult from './ClassResult';
@@ -50,8 +49,26 @@ export default function ClassMain() {
             database.ref(`${creatorID}/user`).update({
                 [currentUser.uid]: 0
             }).then(() => setPanelIndex(1))
-        } else {
-            setPanelIndex(0)
+        }
+
+    }, [creatorID, database])
+
+    useEffect(() => {
+        if (creatorID !== null) {
+            const onValueChange = database
+                .ref(`/`)
+                .on('value', snapshot => {
+                    const ExistClass = new Set()
+                    snapshot.forEach(child => {
+                        ExistClass.add(child.key)
+                    })
+                    if (!ExistClass.has(creatorID)) {
+                        setPanelIndex(0)
+                    }
+                });
+
+            // Stop listening for updates when no longer required
+            return () => database.ref('/').off('value', onValueChange);
         }
 
     }, [creatorID, database])
