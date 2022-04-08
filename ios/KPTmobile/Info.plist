@@ -68,5 +68,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>We use Bluetooth to connect to the Ketones hardware device.</string>
 </dict>
 </plist>
