@@ -2,6 +2,8 @@ import React from 'react'
 import { View, Text, FlatList } from 'react-native'
 import DeviceComponent from '../DeviceComponent';
 
+import Card from '../../Card';
+
 const DATA = [
     {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -31,22 +33,11 @@ export default function Device() {
     return (
         <>
             <DeviceComponent />
-            <View
+            <Card
                 style={{
                     flex: 1,
                     backgroundColor: "#ffffff",
                     margin: 10,
-                    // marginHorizontal: 10,
-                    // marginTop: 10,
-                    borderRadius: 10,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,
-                    elevation: 5,
                 }}
             >
                 <Text style={{ fontSize: 24, fontWeight: "bold", lineHeight: 32, letterSpacing: 1, margin: 10 }}>
@@ -57,7 +48,7 @@ export default function Device() {
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />
-            </View>
+            </Card>
         </>
     )
 }

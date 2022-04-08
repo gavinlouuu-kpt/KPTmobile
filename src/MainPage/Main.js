@@ -6,6 +6,8 @@ import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommun
 import DeviceComponent from './DeviceComponent';
 import KetonesBreath from './KetonesBreath';
 
+import Card from '../Card';
+
 export default function Main({ navigation }) {
 
     const handleCreateClass = () => {
@@ -19,23 +21,12 @@ export default function Main({ navigation }) {
     return (
         <View style={{ flex: 1, backgroundColor: "#F0F0F0" }}>
             <KetonesBreath />
-            <View
+            <Card
                 style={{
                     height: 130,
                     backgroundColor: "#ffffff",
-                    // margin: 10,
                     marginHorizontal: 10,
                     marginTop: 10,
-                    borderRadius: 10,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,
-
-                    elevation: 5,
                 }}>
                 <View style={{ borderRadius: 10, }}>
                     <View style={{ marginHorizontal: 10, marginTop: 10, marginBottom: 5 }}>
@@ -59,62 +50,44 @@ export default function Main({ navigation }) {
                         </View>
                     </View>
                 </View>
-            </View>
+            </Card>
             {/* This is DeviceComponent */}
             <DeviceComponent />
 
             <View style={{ flex: 3, flexDirection: "row", margin: 10 }}>
                 <TouchableWithoutFeedback onPress={handleJoinClass}>
-                    <View
-                        style={{
-                            flex: 1,
-                            backgroundColor: "#ffffff",
-                            marginRight: 2.5,
-                            borderRadius: 10,
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 2,
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 3.84,
-
-                            elevation: 5,
-                        }}>
-                        <View style={{ margin: 10, position: "relative" }}>
-                            <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "30%", width: "43.5%", position: "absolute", marginTop: "4%" }} />
-                            <Text style={{ fontSize: 32, fontWeight: "bold", fontStyle: "italic", lineHeight: 34, letterSpacing: 1 }}>Join</Text>
-                            <Text style={{ fontSize: 32, fontWeight: "bold", lineHeight: 34, letterSpacing: 1 }}>a Class</Text>
-                        </View>
+                    <View style={{ flex: 1 }}>
+                        <Card
+                            style={{
+                                flex: 1,
+                                backgroundColor: "#ffffff",
+                                marginRight: 2.5,
+                            }}>
+                            <View style={{ margin: 10, position: "relative" }}>
+                                <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "30%", width: "43.5%", position: "absolute", marginTop: "4%" }} />
+                                <Text style={{ fontSize: 32, fontWeight: "bold", fontStyle: "italic", lineHeight: 34, letterSpacing: 1 }}>Join</Text>
+                                <Text style={{ fontSize: 32, fontWeight: "bold", lineHeight: 34, letterSpacing: 1 }}>a Class</Text>
+                            </View>
+                        </Card>
                     </View>
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={handleCreateClass}>
-                    <View
-                        style={{
+                    <View style={{ flex: 1 }}>
+                        <Card style={{
                             flex: 1,
                             backgroundColor: "#ffffff",
                             marginLeft: 2.5,
-                            borderRadius: 10,
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 2,
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 3.84,
-
-                            elevation: 5,
                         }}>
-                        <View style={{ margin: 10, flex: 1, justifyContent: "flex-end" }}>
-                            <View style={{ position: "relative" }}>
-                                <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "50%", width: "65%", position: "absolute", marginTop: "5%" }} />
-                                <Text style={{ fontSize: 32, fontWeight: "bold", fontStyle: "italic", lineHeight: 34, letterSpacing: 1 }}>Create</Text>
+                            <View style={{ margin: 10, flex: 1, justifyContent: "flex-end" }}>
+                                <View style={{ position: "relative" }}>
+                                    <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "50%", width: "65%", position: "absolute", marginTop: "5%" }} />
+                                    <Text style={{ fontSize: 32, fontWeight: "bold", fontStyle: "italic", lineHeight: 34, letterSpacing: 1 }}>Create</Text>
+                                </View>
+                                <Text style={{ fontSize: 32, fontWeight: "bold", lineHeight: 34, letterSpacing: 1 }}>a Class</Text>
                             </View>
-                            <Text style={{ fontSize: 32, fontWeight: "bold", lineHeight: 34, letterSpacing: 1 }}>a Class</Text>
-                        </View>
+                        </Card>
                     </View>
                 </TouchableWithoutFeedback>
-
             </View>
         </View>
     );

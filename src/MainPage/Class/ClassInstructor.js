@@ -8,6 +8,8 @@ import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommun
 import { useAuth } from '../../Authentication/AuthProvider';
 import { generateNumber } from "../../utils";
 
+import Card from '../../Card';
+
 export default function ClassInstructor({ navigation }) {
 
   const { database, currentUser } = useAuth()
@@ -81,21 +83,11 @@ export default function ClassInstructor({ navigation }) {
 
   const renderItem = ({ item }) => {
     return (
-      <View style={{
+      <Card style={{
         height: 117,
         width: flatListWidth / 3 - 10,
         margin: 5,
         backgroundColor: item.BPM >= 100 ? "#FF5050" : "#ffffff",
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
       }}>
         <View style={{ margin: 5 }}>
           <Text style={{ fontSize: 18, lineHeight: 34, letterSpacing: 0.75 }}>{item.id.substring(0, 2)}</Text>
@@ -110,26 +102,16 @@ export default function ClassInstructor({ navigation }) {
             <Text style={{ fontSize: 14, fontWeight: "500", lineHeight: 22, letterSpacing: 0.25 }}>BPM</Text>
           </View>
         </View>
-      </View>
+      </Card>
     );
   };
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{
+      <Card style={{
         height: 52,
         backgroundColor: "#ffffff",
         margin: 10,
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        elevation: 5,
       }}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={{ fontSize: 24, fontWeight: "700", lineHeight: 32, letterSpacing: 1, margin: 10 }}>
@@ -140,7 +122,7 @@ export default function ClassInstructor({ navigation }) {
             <Text style={{ fontSize: 48, fontWeight: "bold", letterSpacing: 1, lineHeight: 50, marginVertical: 5, marginLeft: 84, fontStyle: "italic" }}>{classID}</Text>
           </View>
         </View>
-      </View>
+      </Card>
       <View style={{ flex: 1, marginHorizontal: 10 }}>
         <FlatList
           data={list}

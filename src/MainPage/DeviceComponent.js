@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity } from 'react-native'
 
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import Card from '../Card';
+
 export default function DeviceComponent() {
 
     const [deviceConnect, setDeviceConnect] = useState(false)
@@ -17,23 +19,13 @@ export default function DeviceComponent() {
     }
 
     return (
-        <View
+        <Card
             style={{
                 height: 100,
                 backgroundColor: "#ffffff",
-                // margin: 10,
+
                 marginHorizontal: 10,
                 marginTop: 10,
-                borderRadius: 10,
-                shadowColor: "#000",
-                shadowOffset: {
-                    width: 0,
-                    height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-
-                elevation: 5,
             }}>
             <View style={{ borderRadius: 10 }}>
                 <View style={{ marginHorizontal: 10, marginTop: 10, marginBottom: 5 }}>
@@ -62,6 +54,6 @@ export default function DeviceComponent() {
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </Card>
     )
 }

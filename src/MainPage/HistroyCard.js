@@ -3,6 +3,8 @@ import { View, Text } from 'react-native'
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
+import Card from '../Card';
+
 const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
@@ -27,21 +29,11 @@ export default function HistroyCard({ data }) {
     }
 
     return (
-        <View style={{
+        <Card style={{
             height: 140,
             backgroundColor: "#ffffff",
             margin: 5,
             padding: 10,
-            borderRadius: 10,
-            shadowColor: "#000",
-            shadowOffset: {
-                width: 0,
-                height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-
-            elevation: 5,
         }}>
             <Text style={{ fontSize: 24, lineHeight: 32, letterSpacing: 1, fontWeight: "bold", }}>{getDate()}</Text>
             <View style={{ paddingHorizontal: 20 }}>
@@ -82,6 +74,6 @@ export default function HistroyCard({ data }) {
                     </View>
                 </View>
             </View>
-        </View>
+        </Card>
     )
 }

@@ -4,6 +4,7 @@ import { Text, View, TouchableWithoutFeedback, Platform, KeyboardAvoidingView, K
 import { Input, Button } from 'native-base';
 
 import KetonesBreath from "../KetonesBreath";
+import Card from '../../Card';
 
 export default function StudentLogin({ handleContinue, handleInputClassID }) {
 
@@ -14,22 +15,12 @@ export default function StudentLogin({ handleContinue, handleInputClassID }) {
                 style={{ flex: 1, justifyContent: "center" }}
             >
                 <KetonesBreath />
-                <View style={{
+                <Card style={{
                     height: 52,
                     backgroundColor: "#ffffff",
                     // margin: 10,
                     marginHorizontal: 10,
                     marginTop: 10,
-                    borderRadius: 10,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,
-
-                    elevation: 5,
                     flexDirection: "row",
                     alignItems: "center",
                 }}>
@@ -39,7 +30,7 @@ export default function StudentLogin({ handleContinue, handleInputClassID }) {
                     <View style={{ flex: 1, marginRight: 10 }}>
                         <Input variant="rounded" placeholder="Enter The Class ID " isFullWidth={true} onChangeText={(Text) => handleInputClassID(Text)} />
                     </View>
-                </View>
+                </Card>
                 <View style={{ alignItems: "center", marginVertical: 10 }}>
                     <Button onPress={handleContinue} >Continue</Button>
                 </View>

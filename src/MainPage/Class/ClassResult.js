@@ -5,23 +5,15 @@ import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommun
 
 import KetonesBreath from '../KetonesBreath'
 
+import Card from '../../Card';
+
 export default function ClassResult({ number }) {
     return (
         <View style={{ flex: 1 }}>
-            <View style={{
+            <Card style={{
                 height: 52,
                 backgroundColor: "#ffffff",
                 margin: 10,
-                borderRadius: 10,
-                shadowColor: "#000",
-                shadowOffset: {
-                    width: 0,
-                    height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-
-                elevation: 5,
             }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Text style={{ fontSize: 24, fontWeight: "700", lineHeight: 32, letterSpacing: 1, margin: 10 }}>
@@ -32,25 +24,14 @@ export default function ClassResult({ number }) {
                         <Text style={{ fontSize: 48, fontWeight: "bold", letterSpacing: 1, lineHeight: 50, marginVertical: 5, marginLeft: 84, fontStyle: "italic" }}>{number}</Text>
                     </View>
                 </View>
-            </View>
+            </Card>
             <KetonesBreath />
-            <View
+            <Card
                 style={{
                     height: 140,
                     backgroundColor: "#ffffff",
-                    // margin: 10,
                     marginHorizontal: 10,
                     marginTop: 10,
-                    borderRadius: 10,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,
-
-                    elevation: 5,
                 }}>
                 <View style={{ borderRadius: 10, }}>
                     <View style={{ marginHorizontal: 10, marginTop: 10, marginBottom: 5 }}>
@@ -74,7 +55,7 @@ export default function ClassResult({ number }) {
                         </View>
                     </View>
                 </View>
-            </View>
+            </Card>
         </View>
     )
 }

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
 
+import Card from '../Card';
+
 export default function KetonesBreath() {
 
     const [breathText, setBreathtext] = useState("Click & Breath")
@@ -21,23 +23,12 @@ export default function KetonesBreath() {
     }
 
     return (
-        <View
+        <Card
             style={{
                 height: 100,
                 backgroundColor: "#ffffff",
-                // margin: 10,
                 marginHorizontal: 10,
                 marginTop: 10,
-                borderRadius: 10,
-                shadowColor: "#000",
-                shadowOffset: {
-                    width: 0,
-                    height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-
-                elevation: 5,
             }}>
             <TouchableWithoutFeedback onPress={handleBack}>
                 <View style={{ flexDirection: "row", flex: 1, borderRadius: 10, }}>
@@ -67,6 +58,6 @@ export default function KetonesBreath() {
                     </View>
                 </View>
             </TouchableWithoutFeedback>
-        </View>
+        </Card>
     )
 }
