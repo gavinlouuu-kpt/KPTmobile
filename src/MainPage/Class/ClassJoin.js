@@ -15,6 +15,12 @@ export default function ClassJoin({ route }) {
     const [creatorID, setCreatorID] = useState(null)
     const [panelIndex, setPanelIndex] = useState(0)
 
+    const resetState = () => {
+        setNumber(0)
+        setCreatorID(null)
+        setPanelIndex(0)
+    }
+
     const handleInputClassID = async (ID) => {
         setNumber(ID)
     }
@@ -35,7 +41,7 @@ export default function ClassJoin({ route }) {
     const renderView = () => {
         switch (panelIndex) {
             case 1:
-                return <ClassResult number={number} />
+                return <ClassResult classID={number} creatorID={creatorID} />
             default:
                 return <ClassLogin
                     handleContinue={handleContinue}
@@ -65,7 +71,7 @@ export default function ClassJoin({ route }) {
     useEffect(() => {
         if (creatorID !== null) {
             database.ref(`${creatorID}/user`).update({
-                [currentUser.uid]: 0
+                [currentUser.uid]: [0]
             }).then(() => setPanelIndex(1))
         }
     }, [creatorID, database])
@@ -81,7 +87,7 @@ export default function ClassJoin({ route }) {
                         ExistClass.add(child.key)
                     })
                     if (!ExistClass.has(creatorID)) {
-                        setPanelIndex(0)
+                        resetState()
                     }
                 });
 
@@ -89,7 +95,7 @@ export default function ClassJoin({ route }) {
             return () => database.ref('/').off('value', onValueChange);
         }
 
-    }, [creatorID, database])
+    }, [creatorID, database, resetState])
 
     return (
         <View style={{ flex: 1 }}>

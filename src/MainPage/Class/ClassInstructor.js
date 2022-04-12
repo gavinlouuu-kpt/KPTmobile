@@ -105,7 +105,7 @@ export default function ClassInstructor({ navigation, route }) {
           <Text style={{ fontSize: 18, lineHeight: 34, letterSpacing: 0.75 }}>{item.id.substring(0, 2)}</Text>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "center", justifyContent: "space-around" }}>
-          <Text style={{ fontSize: 36, fontWeight: "bold", lineHeight: 50, letterSpacing: 1, fontStyle: item.BPM >= 100 ? "italic" : "normal" }}>{item.BPM}</Text>
+          <Text style={{ fontSize: 36, fontWeight: "bold", lineHeight: 50, letterSpacing: 1, fontStyle: item.BPM >= 100 ? "italic" : "normal" }}>{item.BPM[item.BPM.length - 1]}</Text>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <MaterialCommunityIconsIcon
               name="heart-outline"

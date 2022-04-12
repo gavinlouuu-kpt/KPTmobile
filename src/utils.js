@@ -14,7 +14,7 @@ export const generateNumber = () => {
     const giveValues = () => {
         let zeroes;
         let number = Math.round((Math.random() * 9999));
-        
+
         zeroes = 4 - number.toString().length;
 
         for (var j = 1; j <= zeroes; j++) {
@@ -24,4 +24,8 @@ export const generateNumber = () => {
     }
 
     return giveValues(4).toString();
+}
+
+export const randomHeartRate = () => {
+    return Math.floor(Math.random() * (Math.floor(220) - Math.ceil(40) + 1) + Math.ceil(40));
 }
