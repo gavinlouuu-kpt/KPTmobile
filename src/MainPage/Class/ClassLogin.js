@@ -6,7 +6,7 @@ import { Input, Button } from 'native-base';
 import KetonesBreath from "../KetonesBreath";
 import Card from '../../Card';
 
-export default function StudentLogin({ handleContinue, handleInputClassID }) {
+export default function ClassLogin({ handleContinue, handleInputClassID }) {
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

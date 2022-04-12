@@ -10,7 +10,9 @@ import { generateNumber } from "../../utils";
 
 import Card from '../../Card';
 
-export default function ClassInstructor({ navigation }) {
+export default function ClassInstructor({ navigation, route }) {
+
+  const { setClassInfo } = route.params;
 
   const { database, currentUser } = useAuth()
 
@@ -35,6 +37,10 @@ export default function ClassInstructor({ navigation }) {
         classSet.add(child.key)
         if (currentUser.uid === child.key) {
           setClassID(child.val().ClassID)
+          setClassInfo({
+            classID: child.val().ClassID,
+            group: "T"
+          })
           exist = true
         }
       })
@@ -51,6 +57,12 @@ export default function ClassInstructor({ navigation }) {
           }
         }
         setClassID(ClassID)
+        setClassInfo(
+          {
+            classID: ClassID,
+            group: "T"
+          }
+        )
         database.ref(`/${currentUser.uid}`).update({
           ClassID: ClassID
         })

@@ -1,81 +1,165 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { Text, View, TouchableWithoutFeedback, StyleSheet, LogBox } from 'react-native';
+
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+
+import Card from '../../Card';
 
 import { useAuth } from '../../Authentication/AuthProvider';
 
 
-import StudentLogin from './StudentLogin';
-import ClassResult from './ClassResult';
+/********************************/
+//Have an warning that passing a function to Navigation State!
+LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+]);
+/********************************/
+
+
 
 export default function ClassMain() {
 
+    const navigation = useNavigation();
+
     const { database, currentUser } = useAuth()
 
-    const [number, setNumber] = useState(0)
-    const [creatorID, setCreatorID] = useState(null)
-    const [panelIndex, setPanelIndex] = useState(0)
+    const [isCreatedClass, setIsCreatedClass] = useState(false)
+    const [classInfo, setClassInfo] = useState(null)
 
-    const handleInputClassID = async (ID) => {
-        setNumber(ID)
+    const handleCreateClass = () => {
+        navigation.navigate("ClassInstructor", {
+            setClassInfo: setClassInfo
+        })
     }
 
-    const handleContinue = async () => {
-        const isCorrectNum = /^[0-9]{4}$/.test(Number(number))
-        if (isCorrectNum) {
-            const snapshot = await database.ref('/').once('value')
-            snapshot.forEach(child => {
-                if (child.val().ClassID === Number(number)) {
-                    setCreatorID(child.key)
-                    setNumber(Number(number))
-                }
+    const handleJoinClass = () => {
+        navigation.navigate("ClassJoin")
+    }
+
+    const handleGoBackClass = () => {
+        if (classInfo.group === "T") {
+            handleCreateClass()
+        } else if (classInfo.group === "S") {
+            navigation.navigate("ClassJoin", {
+                classID: classInfo.classID
             })
         }
     }
 
-    const renderView = () => {
-        switch (panelIndex) {
-            case 1:
-                return <ClassResult number={number} />
+    useFocusEffect(
+        useCallback(() => {
+            const getData = async () => {
+                setIsCreatedClass(false)
+                const snapshot = await database.ref('/').once('value')
+
+                snapshot.forEach(child => {
+                    if (currentUser.uid === child.key) {
+                        setClassInfo({
+                            classID: child.val().ClassID,
+                            group: "T"
+                        })
+                        setIsCreatedClass(true)
+                    } else {
+                        if (child.hasChild("user") && child.val().user[currentUser.uid] !== undefined) {
+                            setClassInfo({
+                                classID: child.val().ClassID,
+                                group: "S"
+                            })
+                            setIsCreatedClass(true)
+                        }
+                    }
+
+                })
+            }
+            getData()
+        }, [database, currentUser])
+    );
+
+    const renderClass = () => {
+        switch (isCreatedClass) {
+            case true:
+                return (
+                    <View style={{ height: 200, margin: 10 }}>
+                        <TouchableWithoutFeedback onPress={handleGoBackClass}>
+                            <View style={{ flex: 1 }}>
+                                <Card style={{
+                                    flex: 1,
+                                    backgroundColor: "#ffffff",
+                                    justifyContent: "center",
+                                    alignItems: "flex-end",
+                                    padding: 5
+                                }}>
+                                    <View style={{ position: "relative" }}>
+                                        <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "70%", width: 70, position: "absolute", marginTop: 5 }} />
+                                        <Text style={classes.highLightFont}>Back</Text>
+                                    </View>
+                                    <Text style={classes.defaultFont}>to Class</Text>
+                                    <Text style={classes.defaultFont}>{classInfo.classID}</Text>
+                                </Card>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                )
             default:
-                return <StudentLogin
-                    handleContinue={handleContinue}
-                    handleInputClassID={handleInputClassID}
-                />
+                return (
+                    <View style={{ height: 200, flexDirection: "row", margin: 10 }}>
+                        <TouchableWithoutFeedback onPress={handleJoinClass}>
+                            <View style={{ flex: 1 }}>
+                                <Card
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: "#ffffff",
+                                        marginRight: 2.5,
+                                    }}>
+                                    <View style={{ margin: 10, position: "relative" }}>
+                                        <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "30%", width: "43.5%", position: "absolute", marginTop: "4%" }} />
+                                        <Text style={classes.highLightFont}>Join</Text>
+                                        <Text style={classes.defaultFont}>a Class</Text>
+                                    </View>
+                                </Card>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={handleCreateClass}>
+                            <View style={{ flex: 1 }}>
+                                <Card style={{
+                                    flex: 1,
+                                    backgroundColor: "#ffffff",
+                                    marginLeft: 2.5,
+                                }}>
+                                    <View style={{ margin: 10, flex: 1, justifyContent: "flex-end" }}>
+                                        <View style={{ position: "relative" }}>
+                                            <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "50%", width: "65%", position: "absolute", marginTop: "5%" }} />
+                                            <Text style={classes.highLightFont}>Create</Text>
+                                        </View>
+                                        <Text style={classes.defaultFont}>a Class</Text>
+                                    </View>
+                                </Card>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                )
         }
     }
 
-    useEffect(() => {
-        if (creatorID !== null) {
-            database.ref(`${creatorID}/user`).update({
-                [currentUser.uid]: 0
-            }).then(() => setPanelIndex(1))
-        }
-
-    }, [creatorID, database])
-
-    useEffect(() => {
-        if (creatorID !== null) {
-            const onValueChange = database
-                .ref(`/`)
-                .on('value', snapshot => {
-                    const ExistClass = new Set()
-                    snapshot.forEach(child => {
-                        ExistClass.add(child.key)
-                    })
-                    if (!ExistClass.has(creatorID)) {
-                        setPanelIndex(0)
-                    }
-                });
-
-            // Stop listening for updates when no longer required
-            return () => database.ref('/').off('value', onValueChange);
-        }
-
-    }, [creatorID, database])
-
     return (
-        <View style={{ flex: 1 }}>
-            {renderView()}
-        </View>
+        <>
+            {renderClass()}
+        </>
     )
 }
+
+const classes = StyleSheet.create({
+    defaultFont: {
+        fontSize: 32,
+        fontWeight: "bold",
+        lineHeight: 34,
+        letterSpacing: 1
+    },
+    highLightFont: {
+        fontSize: 32,
+        fontWeight: "bold",
+        fontStyle: "italic",
+        lineHeight: 34,
+        letterSpacing: 1
+    }
+});

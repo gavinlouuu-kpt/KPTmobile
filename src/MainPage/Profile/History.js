@@ -1,6 +1,5 @@
-import React from 'react'
-import { View, Text, ScrollView } from 'react-native'
-
+import React, { useEffect, useState } from 'react'
+import { View, Text, FlatList } from 'react-native'
 import HistroyCard from '../HistroyCard';
 
 const HistoryList = [
@@ -34,10 +33,39 @@ const HistoryList = [
     }
 ]
 
-export default function History() {
+export default function History({ needRender = true }) {
+
+    const [renderList, setrenderList] = useState([])
+
+    useEffect(() => {
+        if (!needRender) {
+            setrenderList(HistoryList.slice(0, 3))
+        }
+    }, [needRender])
+
+
+    const renderView = () => {
+        switch (needRender) {
+            case false:
+                return (
+                    <>
+                        {renderList.map((item, i) => <HistroyCard item={item} key={i} />)}
+                    </>
+                )
+            default:
+                return (
+                    <FlatList
+                        data={HistoryList}
+                        renderItem={HistroyCard}
+                        keyExtractor={(item) => item.id}
+                    />
+                )
+        }
+    }
+
     return (
-        <ScrollView style={{ flex: 1 }}>
-            {HistoryList.map(el => <HistroyCard data={el} key={el.id} />)}
-        </ScrollView>
+        <>
+            {renderView()}
+        </>
     )
 }

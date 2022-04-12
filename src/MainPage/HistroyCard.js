@@ -9,7 +9,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
 
-export default function HistroyCard({ data }) {
+export default function HistroyCard({ item }) {
 
     const ordinalNum = (num) => {
         if (num === 1 || num === 21) return "st"
@@ -21,7 +21,7 @@ export default function HistroyCard({ data }) {
     const getDate = () => {
 
         const currentTime = new Date(0)
-        currentTime.setUTCSeconds(data.date)
+        currentTime.setUTCSeconds(item.date)
         const day = currentTime.getDate()
         const month = currentTime.getMonth()
         const year = currentTime.getFullYear()
@@ -42,7 +42,7 @@ export default function HistroyCard({ data }) {
                     <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75, flex: 1 }}>Ketone Diff:</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
                         <View style={{ flex: 2 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{data.KetoneDiff}</Text>
+                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{item.KetoneDiff}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
                             <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75 }}>units</Text>
@@ -54,7 +54,7 @@ export default function HistroyCard({ data }) {
                     <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75, flex: 1 }}>Average Heart Rate:</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
                         <View style={{ flex: 2 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{data.HeartRate}</Text>
+                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{item.HeartRate}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
                             <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75 }}>BPM</Text>
@@ -66,7 +66,7 @@ export default function HistroyCard({ data }) {
                     <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75, flex: 1 }}>Burnt Calories:</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
                         <View style={{ flex: 2 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{data.Cal}</Text>
+                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{item.Cal}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
                             <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75 }}>cal</Text>
