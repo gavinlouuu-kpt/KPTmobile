@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
@@ -35,41 +35,41 @@ export default function HistroyCard({ item }) {
             margin: 5,
             padding: 10,
         }}>
-            <Text style={{ fontSize: 24, lineHeight: 32, letterSpacing: 1, fontWeight: "bold", }}>{getDate()}</Text>
+            <Text style={classes.dateText}>{getDate()}</Text>
             <View style={{ paddingHorizontal: 20 }}>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <View style={classes.rowContainer}>
                     <EntypoIcon name="dot-single" size={18} />
-                    <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75, flex: 1 }}>Ketone Diff:</Text>
-                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
+                    <Text style={classes.title}>Ketone Diff:</Text>
+                    <View style={[classes.rowContainer, { flex: 1 }]}>
                         <View style={{ flex: 2 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{item.KetoneDiff}</Text>
+                            <Text style={classes.resultText}>{item.KetoneDiff}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75 }}>units</Text>
+                            <Text style={classes.defaultFont}>units</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <View style={classes.rowContainer}>
                     <EntypoIcon name="dot-single" size={18} />
-                    <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75, flex: 1 }}>Average Heart Rate:</Text>
-                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
+                    <Text style={classes.title}>Average Heart Rate:</Text>
+                    <View style={[classes.rowContainer, { flex: 1 }]}>
                         <View style={{ flex: 2 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{item.HeartRate}</Text>
+                            <Text style={classes.resultText}>{item.HeartRate}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75 }}>BPM</Text>
+                            <Text style={classes.defaultFont}>BPM</Text>
                         </View>
                     </View>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <View style={classes.rowContainer}>
                     <EntypoIcon name="dot-single" size={18} />
-                    <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75, flex: 1 }}>Burnt Calories:</Text>
-                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", flex: 1 }}>
+                    <Text style={classes.title}>Burnt Calories:</Text>
+                    <View style={[classes.rowContainer, { flex: 1 }]}>
                         <View style={{ flex: 2 }}>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", lineHeight: 32, letterSpacing: 0.75 }}>{item.Cal}</Text>
+                            <Text style={classes.resultText}>{item.Cal}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75 }}>cal</Text>
+                            <Text style={classes.defaultFont}>cal</Text>
                         </View>
                     </View>
                 </View>
@@ -77,3 +77,36 @@ export default function HistroyCard({ item }) {
         </Card>
     )
 }
+
+const classes = StyleSheet.create({
+    defaultFont: {
+        fontSize: 14,
+        fontWeight: "400",
+        lineHeight: 24,
+        letterSpacing: 0.75
+    },
+    title: {
+        fontSize: 14,
+        fontWeight: "400",
+        lineHeight: 24,
+        letterSpacing: 0.75,
+        flex: 1
+    },
+    dateText: {
+        fontSize: 24,
+        lineHeight: 32,
+        letterSpacing: 1,
+        fontWeight: "bold"
+    },
+    rowContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    resultText: {
+        fontSize: 20,
+        fontWeight: "bold",
+        lineHeight: 32,
+        letterSpacing: 0.75
+    }
+})

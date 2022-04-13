@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 
 import { Button } from "native-base";
+import firestore from '@react-native-firebase/firestore';
 
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -21,8 +22,18 @@ export default function ClassInstructor({ navigation, route }) {
   const [list, setList] = useState([])
 
   const handleEndClass = async () => {
-    await database.ref(`/${currentUser.uid}`).remove();
-    navigation.navigate("Main")
+    const ref = database.ref(`/${currentUser.uid}`)
+    await ref.once('value').then(async snap => {
+      await firestore()
+        .collection('classData')
+        .doc(currentUser.uid)
+        .collection('classInfo')
+        .add(snap.val())
+        .then(async () => {
+          await ref.remove();
+          navigation.navigate("Main")
+        })
+    })
   }
 
 
@@ -102,16 +113,16 @@ export default function ClassInstructor({ navigation, route }) {
         backgroundColor: item.BPM >= 100 ? "#FF5050" : "#ffffff",
       }}>
         <View style={{ margin: 5 }}>
-          <Text style={{ fontSize: 18, lineHeight: 34, letterSpacing: 0.75 }}>{item.id.substring(0, 2)}</Text>
+          <Text style={classes.nameText}>{item.id.substring(0, 2)}</Text>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "center", justifyContent: "space-around" }}>
-          <Text style={{ fontSize: 36, fontWeight: "bold", lineHeight: 50, letterSpacing: 1, fontStyle: item.BPM >= 100 ? "italic" : "normal" }}>{item.BPM[item.BPM.length - 1]}</Text>
+          <Text style={[classes.resultText, { fontStyle: item.BPM >= 100 ? "italic" : "normal" }]}>{item.BPM[item.BPM.length - 1]}</Text>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <MaterialCommunityIconsIcon
               name="heart-outline"
               size={24}
             />
-            <Text style={{ fontSize: 14, fontWeight: "500", lineHeight: 22, letterSpacing: 0.25 }}>BPM</Text>
+            <Text style={classes.unitText}>BPM</Text>
           </View>
         </View>
       </Card>
@@ -126,12 +137,12 @@ export default function ClassInstructor({ navigation, route }) {
         margin: 10,
       }}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ fontSize: 24, fontWeight: "700", lineHeight: 32, letterSpacing: 1, margin: 10 }}>
+          <Text style={classes.classTitle}>
             Class ID
           </Text>
           <View style={{ position: "relative" }}>
-            <View style={{ backgroundColor: "#FFB400", flex: 1, height: "40%", width: "65%", position: "absolute", marginTop: "8%", marginLeft: "40%" }} />
-            <Text style={{ fontSize: 48, fontWeight: "bold", letterSpacing: 1, lineHeight: 50, marginVertical: 5, marginLeft: 84, fontStyle: "italic" }}>{classID}</Text>
+            <View style={classes.backgroundColor} />
+            <Text style={classes.classText}>{classID}</Text>
           </View>
         </View>
       </Card>
@@ -146,10 +157,62 @@ export default function ClassInstructor({ navigation, route }) {
         />
       </View>
       <View style={{ marginVertical: 10, marginHorizontal: 10 }}>
-        <Button size="lg" _text={{ fontWeight: 600, fontSize: 16, lineHeight: 28, letterSpacing: 0.75, paddingY: 1.5 }} style={{ borderRadius: 40, backgroundColor: "#5F2EEA" }} onPress={handleEndClass}>
+        <Button size="lg" _text={classes.ButtonText} style={{ borderRadius: 40, backgroundColor: "#5F2EEA" }} onPress={handleEndClass}>
           End Class
         </Button>
       </View>
     </View>
   )
 }
+
+const classes = StyleSheet.create({
+  ButtonText: {
+    fontWeight: 600,
+    fontSize: 16,
+    lineHeight: 28,
+    letterSpacing: 0.75,
+    paddingY: 1.5
+  },
+  backgroundColor: {
+    backgroundColor: "#FFB400",
+    flex: 1,
+    height: "40%",
+    width: "65%",
+    position: "absolute",
+    marginTop: "8%",
+    marginLeft: "40%"
+  },
+  classText: {
+    fontSize: 48,
+    fontWeight: "bold",
+    letterSpacing: 1,
+    lineHeight: 50,
+    marginVertical: 5,
+    marginLeft: 84,
+    fontStyle: "italic"
+  },
+  classTitle: {
+    fontSize: 24,
+    fontWeight: "700",
+    lineHeight: 32,
+    letterSpacing: 1,
+    margin: 10
+  },
+  nameText: {
+    fontSize: 18,
+    lineHeight: 34,
+    letterSpacing: 0.75
+  },
+  resultText: {
+    fontSize: 36,
+    fontWeight: "bold",
+    lineHeight: 50,
+    letterSpacing: 1
+  },
+  unitText: {
+    fontSize: 14,
+    fontWeight: "500",
+    lineHeight: 22,
+    letterSpacing: 0.25
+  }
+})

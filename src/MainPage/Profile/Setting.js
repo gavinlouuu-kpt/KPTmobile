@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
 
 import { useAuth } from '../../Authentication/AuthProvider'
 
@@ -19,11 +19,29 @@ export default function Setting() {
             backgroundColor: "#ffffff",
             margin: 5,
         }}>
-            <ScrollView style={{ flex: 1, backgroundColor: "#ffffff", borderRadius: 10, }}>
-                <TouchableOpacity onPress={handleLogout} style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-                    <Text style={{ fontSize: 18, fontWeight: "500", letterSpacing: 0.25, lineHeight: 22 }}>Logout</Text>
+            <ScrollView style={classes.container}>
+                <TouchableOpacity onPress={handleLogout} style={classes.Button}>
+                    <Text style={classes.buttonText}>Logout</Text>
                 </TouchableOpacity>
             </ScrollView>
         </Card>
     )
 }
+
+const classes = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#ffffff",
+        borderRadius: 10
+    },
+    Button: {
+        paddingVertical: 10,
+        paddingHorizontal: 15
+    },
+    buttonText: {
+        fontSize: 18,
+        fontWeight: "500",
+        letterSpacing: 0.25,
+        lineHeight: 22
+    }
+})

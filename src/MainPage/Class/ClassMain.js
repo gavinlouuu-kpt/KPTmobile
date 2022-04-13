@@ -90,7 +90,7 @@ export default function ClassMain() {
                                     padding: 5
                                 }}>
                                     <View style={{ position: "relative" }}>
-                                        <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "70%", width: 70, position: "absolute", marginTop: 5 }} />
+                                        <View style={[classes.backgroundColor, { height: "70%", width: 70, marginTop: 5 }]} />
                                         <Text style={classes.highLightFont}>Back</Text>
                                     </View>
                                     <Text style={classes.defaultFont}>to Class</Text>
@@ -112,7 +112,7 @@ export default function ClassMain() {
                                         marginRight: 2.5,
                                     }}>
                                     <View style={{ margin: 10, position: "relative" }}>
-                                        <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "30%", width: "43.5%", position: "absolute", marginTop: "4%" }} />
+                                        <View style={[classes.backgroundColor, { height: "30%", width: "43.5%", marginTop: "4%" }]} />
                                         <Text style={classes.highLightFont}>Join</Text>
                                         <Text style={classes.defaultFont}>a Class</Text>
                                     </View>
@@ -128,7 +128,7 @@ export default function ClassMain() {
                                 }}>
                                     <View style={{ margin: 10, flex: 1, justifyContent: "flex-end" }}>
                                         <View style={{ position: "relative" }}>
-                                            <View style={{ backgroundColor: "#C4C4C4", flex: 1, height: "50%", width: "65%", position: "absolute", marginTop: "5%" }} />
+                                            <View style={[classes.backgroundColor, { height: "50%", width: "65%", marginTop: "5%" }]} />
                                             <Text style={classes.highLightFont}>Create</Text>
                                         </View>
                                         <Text style={classes.defaultFont}>a Class</Text>
@@ -161,5 +161,10 @@ const classes = StyleSheet.create({
         fontStyle: "italic",
         lineHeight: 34,
         letterSpacing: 1
+    },
+    backgroundColor: {
+        backgroundColor: "#C4C4C4",
+        flex: 1,
+        position: "absolute"
     }
 });

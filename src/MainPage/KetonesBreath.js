@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, TouchableOpacity, Image, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 
 import Card from '../Card';
 
@@ -34,20 +34,20 @@ export default function KetonesBreath() {
                 <View style={{ flexDirection: "row", flex: 1, borderRadius: 10, }}>
                     <View style={{ flex: 0.8 }}>
                         <View style={{ margin: 10 }}>
-                            <Text style={{ fontSize: 24, fontWeight: "700", lineHeight: 32, letterSpacing: 1 }}>Ketones Level</Text>
+                            <Text style={classes.title}>Ketones Level</Text>
                         </View>
                         <View style={{ marginHorizontal: 10, justifyContent: "center" }}>
                             {showLevel ?
                                 <View style={{ flexDirection: "row", alignItems: "center", marginHorizontal: 15 }}>
-                                    <Text style={{ fontSize: 14, fontWeight: "500", letterSpacing: 0.25, lineHeight: 22 }}>Your Ketones level: </Text>
+                                    <Text style={classes.subTitle}>Your Ketones level: </Text>
                                     <View style={{ position: "relative" }}>
-                                        <View style={{ backgroundColor: "#FFB400", flex: 1, height: "60%", width: "100%", position: "absolute", marginTop: "10%" }} />
-                                        <Text style={{ fontSize: 48, fontWeight: "700", letterSpacing: 1, lineHeight: 50, fontStyle: "italic" }}>99</Text>
+                                        <View style={classes.backgroundColor} />
+                                        <Text style={classes.resultText}>99</Text>
                                     </View>
                                 </View>
                                 :
-                                <TouchableOpacity style={{ borderColor: "#000000", borderWidth: 1, borderRadius: 40 }} onPress={handleBreath}>
-                                    <Text style={{ textAlign: "center", fontSize: 16, fontWeight: "600", lineHeight: 28, letterSpacing: 0.75 }}>{breathText}</Text>
+                                <TouchableOpacity style={classes.Button} onPress={handleBreath}>
+                                    <Text style={classes.ButtonText}>{breathText}</Text>
                                 </TouchableOpacity>
 
                             }
@@ -61,3 +61,45 @@ export default function KetonesBreath() {
         </Card>
     )
 }
+
+const classes = StyleSheet.create({
+    title: {
+        fontSize: 24,
+        fontWeight: "700",
+        lineHeight: 32,
+        letterSpacing: 1
+    },
+    subTitle: {
+        fontSize: 14,
+        fontWeight: "500",
+        letterSpacing: 0.25,
+        lineHeight: 22
+    },
+    backgroundColor: {
+        backgroundColor: "#FFB400",
+        flex: 1,
+        height: "60%",
+        width: "100%",
+        position: "absolute",
+        marginTop: "10%"
+    },
+    Button: {
+        borderColor: "#000000",
+        borderWidth: 1,
+        borderRadius: 40
+    },
+    ButtonText: {
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: "600",
+        lineHeight: 28,
+        letterSpacing: 0.75
+    },
+    resultText: {
+        fontSize: 48,
+        fontWeight: "700",
+        letterSpacing: 1,
+        lineHeight: 50,
+        fontStyle: "italic"
+    }
+});

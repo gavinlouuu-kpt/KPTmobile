@@ -9,13 +9,15 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext)
 
 export const AuthProvider = ({ children }) => {
+    
+    const database = firebase.app().database('https://kingphasetech-default-rtdb.asia-southeast1.firebasedatabase.app/');
+
     const [currentUser, setCurrentUser] = useState(null);
     const [userStat, setUserStat] = useState({
         username: "Loading",
     });
     const [loading, setLoading] = useState(true);
 
-    const database = firebase.app().database('https://kingphasetech-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
     const Login = async (email, password) =>
         await auth().signInWithEmailAndPassword(email, password);

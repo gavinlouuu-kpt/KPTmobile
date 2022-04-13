@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Text, View, TouchableWithoutFeedback, NativeModules, NativeEventEmitter, Platform, PermissionsAndroid, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, NativeModules, NativeEventEmitter, Platform, PermissionsAndroid, ScrollView, StyleSheet } from 'react-native';
 import BleManager from 'react-native-ble-manager';
 
 const BleManagerModule = NativeModules.BleManager;
@@ -18,11 +18,11 @@ import ClassMain from './Class/ClassMain';
 
 export default function Main({ navigation }) {
 
+    /* --------Start of Ble Coding-------- */
+
     const [isScanning, setIsScanning] = useState(false);
     const peripherals = new Map();
     const [list, setList] = useState([]);
-
-    const [heartRate, setHeartRate] = useState(0);
 
     const startScan = () => {
         if (!isScanning) {
@@ -79,10 +79,9 @@ export default function Main({ navigation }) {
     //     })
 
     // }, []);
+    /* --------End of Ble Coding-------- */
 
-    // useEffect(() => {
-    //     console.log(list)
-    // }, [list])
+    const [heartRate, setHeartRate] = useState(0);
 
     useEffect(() => {
         const randomRate = setInterval(() => {
@@ -93,7 +92,9 @@ export default function Main({ navigation }) {
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: "#F0F0F0" }}>
+
             <KetonesBreath />
+
             <Card
                 style={{
                     height: 130,
@@ -103,19 +104,19 @@ export default function Main({ navigation }) {
                 }}>
                 <View style={{ borderRadius: 10, }}>
                     <View style={{ marginHorizontal: 10, marginTop: 10, marginBottom: 5 }}>
-                        <Text style={{ fontSize: 24, fontWeight: "700", lineHeight: 32, letterSpacing: 1 }}>Heart Rate</Text>
+                        <Text style={classes.title}>Heart Rate</Text>
                     </View>
                     <View style={{ marginHorizontal: 20, flexDirection: "row" }}>
                         <View style={{ flex: 0.4 }}>
-                            <Text style={{ fontSize: 14, fontWeight: "500", lineHeight: 22, letterSpacing: 0.25 }}>current</Text>
+                            <Text style={classes.defaultFont}>current</Text>
                             <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                                <Text style={{ fontSize: 48, fontWeight: "bold", lineHeight: 50, letterSpacing: 1, fontStyle: "italic" }}>{heartRate}</Text>
+                                <Text style={classes.resultText}>{heartRate}</Text>
                                 <View style={{ justifyContent: "center", alignItems: "center" }}>
                                     <MaterialCommunityIconsIcon
                                         name="heart-outline"
                                         size={24}
                                     />
-                                    <Text style={{ fontSize: 14, fontWeight: "500", lineHeight: 22, letterSpacing: 0.25 }}>BPM</Text>
+                                    <Text style={classes.defaultFont}>BPM</Text>
                                 </View>
                             </View>
                         </View>
@@ -135,3 +136,25 @@ export default function Main({ navigation }) {
         </ScrollView>
     );
 }
+
+const classes = StyleSheet.create({
+    defaultFont: {
+        fontSize: 14,
+        fontWeight: "500",
+        lineHeight: 22,
+        letterSpacing: 0.25
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "700",
+        lineHeight: 32,
+        letterSpacing: 1
+    },
+    resultText: {
+        fontSize: 48,
+        fontWeight: "bold",
+        lineHeight: 50,
+        letterSpacing: 1,
+        fontStyle: "italic"
+    }
+});

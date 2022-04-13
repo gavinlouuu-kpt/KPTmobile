@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 import DeviceComponent from '../DeviceComponent';
 
 import Card from '../../Card';
@@ -23,8 +23,8 @@ const DATA = [
 export default function Device() {
 
     const renderItem = ({ item }) => (
-        <View style={{ backgroundColor: "#F5F5F5", marginHorizontal: 10, marginVertical: 2.5, paddingHorizontal: 10 }}>
-            <Text style={{ fontSize: 14, fontWeight: "400", lineHeight: 24, letterSpacing: 0.75 }}>
+        <View style={classes.container}>
+            <Text style={classes.text}>
                 {item.title}
             </Text>
         </View>
@@ -40,7 +40,7 @@ export default function Device() {
                     margin: 10,
                 }}
             >
-                <Text style={{ fontSize: 24, fontWeight: "bold", lineHeight: 32, letterSpacing: 1, margin: 10 }}>
+                <Text style={classes.title}>
                     Searching ...
                 </Text>
                 <FlatList
@@ -52,3 +52,25 @@ export default function Device() {
         </>
     )
 }
+
+const classes = StyleSheet.create({
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+        lineHeight: 32,
+        letterSpacing: 1,
+        margin: 10
+    },
+    container: {
+        backgroundColor: "#F5F5F5",
+        marginHorizontal: 10,
+        marginVertical: 2.5,
+        paddingHorizontal: 10
+    },
+    text: {
+        fontSize: 14,
+        fontWeight: "400",
+        lineHeight: 24,
+        letterSpacing: 0.75
+    }
+})

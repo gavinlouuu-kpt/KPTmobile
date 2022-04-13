@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableWithoutFeedback, Platform, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Text, View, TouchableWithoutFeedback, Platform, KeyboardAvoidingView, Keyboard, StyleSheet } from 'react-native';
 
 import { Input, Button } from 'native-base';
 
@@ -18,13 +18,12 @@ export default function ClassLogin({ handleContinue, handleInputClassID }) {
                 <Card style={{
                     height: 52,
                     backgroundColor: "#ffffff",
-                    // margin: 10,
                     marginHorizontal: 10,
                     marginTop: 10,
                     flexDirection: "row",
                     alignItems: "center",
                 }}>
-                    <Text style={{ fontSize: 24, fontWeight: "bold", lineHeight: 32, letterSpacing: 1, marginHorizontal: 10 }}>
+                    <Text style={classes.title}>
                         Class ID
                     </Text>
                     <View style={{ flex: 1, marginRight: 10 }}>
@@ -38,3 +37,13 @@ export default function ClassLogin({ handleContinue, handleInputClassID }) {
         </TouchableWithoutFeedback>
     )
 }
+
+const classes = StyleSheet.create({
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+        lineHeight: 32,
+        letterSpacing: 1,
+        marginHorizontal: 10
+    }
+})

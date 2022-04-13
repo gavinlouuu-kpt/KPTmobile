@@ -70,9 +70,20 @@ export default function ClassJoin({ route }) {
 
     useEffect(() => {
         if (creatorID !== null) {
-            database.ref(`${creatorID}/user`).update({
-                [currentUser.uid]: [0]
-            }).then(() => setPanelIndex(1))
+            database.ref(`${creatorID}/user`).once('value').then((snap) => {
+                let numChildren = parseInt(snap.numChildren());
+                if (numChildren === 0) {
+                    database.ref(`${creatorID}/user`)
+                        .update({
+                            [currentUser.uid]: [0]
+                        }).then(() => setPanelIndex(1))
+                } else {
+                    database.ref(`${creatorID}/user/${currentUser.uid}`)
+                        .child('0')
+                        .set(0)
+                        .then(() => setPanelIndex(1))
+                }
+            })
         }
     }, [creatorID, database])
 
