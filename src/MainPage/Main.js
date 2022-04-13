@@ -81,14 +81,19 @@ export default function Main({ navigation }) {
     // }, []);
     /* --------End of Ble Coding-------- */
 
+    /* --------Start of setData to Current Heart Rate-------- */
+    /* THe random Heart rate function return a number, so just replay the function that the state of heart rate would be done*/
+
     const [heartRate, setHeartRate] = useState(0);
 
     useEffect(() => {
         const randomRate = setInterval(() => {
-            setHeartRate(randomHeartRate())
+            setHeartRate(randomHeartRate()) // !!! just remove the randomHeartRate() and put the type of number 
         }, 1000)
         return () => clearInterval(randomRate)
     }, [])
+
+    /* --------End of setData to Current Heart Rate-------- */
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: "#F0F0F0" }}>

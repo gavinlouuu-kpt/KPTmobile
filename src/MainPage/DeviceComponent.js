@@ -39,10 +39,10 @@ export default function DeviceComponent() {
                         />
                         <View style={{ flexDirection: "column", marginHorizontal: 10 }}>
                             <Text style={classes.nameText}>KPT Beagle</Text>
-                            <Text style={[classes.statusText, { color: watchConnect ? "#ff0000" : "#000000" }]}>{deviceConnect ? "Not Connected" : "Connected"}</Text>
+                            <Text style={[classes.statusText, { color: deviceConnect ? "#ff0000" : "#000000" }]}>{deviceConnect ? "Not Connected" : "Connected"}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[classes.Button, { borderColor: deviceConnect ? "#ff0000" : "#000000" }]} onPress={handleWatchConnect}>
+                    <TouchableOpacity style={[classes.Button, { borderColor: watchConnect ? "#ff0000" : "#000000" }]} onPress={handleWatchConnect}>
                         <MaterialCommunityIconsIcon
                             name="watch-variant"
                             size={24}
