@@ -19,36 +19,37 @@ import ClassMain from './Class/ClassMain';
 export default function Main({ navigation }) {
 
     /* --------Start of Ble Coding-------- */
+    
 
-    const [isScanning, setIsScanning] = useState(false);
-    const peripherals = new Map();
-    const [list, setList] = useState([]);
+    // const [isScanning, setIsScanning] = useState(false);
+    // const peripherals = new Map();
+    // const [list, setList] = useState([]);
 
-    const startScan = () => {
-        if (!isScanning) {
-            BleManager.scan([], 3, true).then((results) => {
-                console.log('Scanning...');
-                console.log(results)
-                setIsScanning(true);
-            }).catch(err => {
-                console.error(err);
-            });
-        }
-    }
+    // const startScan = () => {
+    //     if (!isScanning) {
+    //         BleManager.scan([], 3, true).then((results) => {
+    //             console.log('Scanning...');
+    //             console.log(results)
+    //             setIsScanning(true);
+    //         }).catch(err => {
+    //             console.error(err);
+    //         });
+    //     }
+    // }
 
-    const handleStopScan = () => {
-        console.log('Scan is stopped');
-        setIsScanning(false);
-    }
+    // const handleStopScan = () => {
+    //     console.log('Scan is stopped');
+    //     setIsScanning(false);
+    // }
 
-    const handleDiscoverPeripheral = (peripheral) => {
-        console.log('Got ble peripheral', peripheral);
-        if (!peripheral.name) {
-            peripheral.name = 'NO NAME';
-        }
-        peripherals.set(peripheral.id, peripheral);
-        setList(Array.from(peripherals.values()));
-    }
+    // const handleDiscoverPeripheral = (peripheral) => {
+    //     console.log('Got ble peripheral', peripheral);
+    //     if (!peripheral.name) {
+    //         peripheral.name = 'NO NAME';
+    //     }
+    //     peripherals.set(peripheral.id, peripheral);
+    //     setList(Array.from(peripherals.values()));
+    // }
 
 
 

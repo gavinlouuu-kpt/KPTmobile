@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import DeviceComponent from '../DeviceComponent';
 
 import Card from '../../Card';
+
+import BleManager from 'react-native-ble-manager';
 
 const DATA = [
     {
@@ -22,11 +24,24 @@ const DATA = [
 
 export default function Device() {
 
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        BleManager.getConnectedPeripherals([]).then((results) => {
+            if(results.length == 0) {
+                setList([]);
+            }else{
+                setList(Array.from(results.values()));
+            }
+        })
+    }, [])
+        
+
     const renderItem = ({ item }) => (
-        <View style={classes.container}>
-            <Text style={classes.text}>
-                {item.title}
-            </Text>
+        <View style={{ backgroundColor: color, marginHorizontal: 10, marginVertical: 2.5, paddingHorizontal: 10 }}>
+            <Text style={{fontSize: 12, textAlign: 'center', color: '#333333', padding: 10}}>{item.name}</Text>
+            <Text style={{fontSize: 10, textAlign: 'center', color: '#333333', padding: 2}}>RSSI: {item.rssi}</Text>
+            <Text style={{fontSize: 8, textAlign: 'center', color: '#333333', padding: 2, paddingBottom: 20}}>{item.id}</Text>
         </View>
     );
 
@@ -43,8 +58,13 @@ export default function Device() {
                 <Text style={classes.title}>
                     Searching ...
                 </Text>
+                {(list.length == 0) &&
+                    <View style={{flex:1, margin: 20}}>
+                        <Text style={{textAlign: 'center'}}>No peripherals</Text>
+                    </View>
+                }
                 <FlatList
-                    data={DATA}
+                    data={list}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />
