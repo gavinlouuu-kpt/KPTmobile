@@ -4,44 +4,18 @@ import DeviceComponent from '../DeviceComponent';
 
 import Card from '../../Card';
 
-import BleManager from 'react-native-ble-manager';
-
-const DATA = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'ESP32-1231231123',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'ESP32-1231231123',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'ESP32-1231231123',
-    },
-];
-
+import { useBle } from '../BleProvider';
 
 export default function Device() {
 
-    const [list, setList] = useState([]);
+    const { list } = useBle();
 
-    useEffect(() => {
-        BleManager.getConnectedPeripherals([]).then((results) => {
-            if(results.length == 0) {
-                setList([]);
-            }else{
-                setList(Array.from(results.values()));
-            }
-        })
-    }, [])
-        
 
     const renderItem = ({ item }) => (
-        <View style={{ backgroundColor: color, marginHorizontal: 10, marginVertical: 2.5, paddingHorizontal: 10 }}>
-            <Text style={{fontSize: 12, textAlign: 'center', color: '#333333', padding: 10}}>{item.name}</Text>
-            <Text style={{fontSize: 10, textAlign: 'center', color: '#333333', padding: 2}}>RSSI: {item.rssi}</Text>
-            <Text style={{fontSize: 8, textAlign: 'center', color: '#333333', padding: 2, paddingBottom: 20}}>{item.id}</Text>
+        <View style={{ backgroundColor: "#ffffff", marginHorizontal: 10, marginVertical: 2.5, paddingHorizontal: 10 }}>
+            <Text style={{ fontSize: 12, textAlign: 'center', color: '#333333', padding: 10 }}>{item.name}</Text>
+            <Text style={{ fontSize: 10, textAlign: 'center', color: '#333333', padding: 2 }}>RSSI: {item.rssi}</Text>
+            <Text style={{ fontSize: 8, textAlign: 'center', color: '#333333', padding: 2, paddingBottom: 20 }}>{item.id}</Text>
         </View>
     );
 
@@ -59,8 +33,8 @@ export default function Device() {
                     Searching ...
                 </Text>
                 {(list.length == 0) &&
-                    <View style={{flex:1, margin: 20}}>
-                        <Text style={{textAlign: 'center'}}>No peripherals</Text>
+                    <View style={{ flex: 1, margin: 20 }}>
+                        <Text style={{ textAlign: 'center' }}>No peripherals</Text>
                     </View>
                 }
                 <FlatList

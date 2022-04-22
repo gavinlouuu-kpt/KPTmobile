@@ -6,13 +6,19 @@ import { useAuth } from './Authentication/AuthProvider'
 import MainStack from "./MainPage/MainStack"
 import AuthStack from "./AuthPage/AuthStack"
 
+import BleProvider from './MainPage/BleProvider';
+
 export default function App() {
 
   const { currentUser } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
-      {currentUser ? <MainStack /> : <AuthStack />}
+      {currentUser ?
+        <BleProvider>
+          <MainStack />
+        </BleProvider>
+        : <AuthStack />}
     </SafeAreaView>
   );
 }

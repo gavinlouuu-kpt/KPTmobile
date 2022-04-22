@@ -13,7 +13,6 @@ import History from './Profile/History';
 
 export default function Profile() {
 
-
   const { userStat } = useAuth();
 
   const slideAnime = useRef(new Animated.Value(0)).current;
