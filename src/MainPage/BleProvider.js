@@ -67,8 +67,7 @@ export default function BleProvider({ children }) {
 
     const startScan = () => {
         if (!isScanning) {
-            BleManager.scan([], 3, false).then((results) => {
-                // BleManager.scan(['6E400001-B5A3-F393-E0A9-E50E24DCCA9E'], 3, false).then((results) => {
+            BleManager.scan(['6E400001-B5A3-F393-E0A9-E50E24DCCA9E'], 3, false).then((results) => {
                 console.log('Scanning...');
                 setIsScanning(true);
             }).catch(err => {
