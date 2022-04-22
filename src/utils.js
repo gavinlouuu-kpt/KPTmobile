@@ -29,3 +29,13 @@ export const generateNumber = () => {
 export const randomHeartRate = () => {
     return Math.floor(Math.random() * (Math.floor(220) - Math.ceil(40) + 1) + Math.ceil(40));
 }
+
+export const ArrayConvert = (array) => {
+    return {
+        datasets: [
+            {
+                data: array
+            }
+        ]
+    }
+}

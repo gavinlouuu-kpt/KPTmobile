@@ -7,9 +7,11 @@ export default function KetonesBreath() {
 
     const [breathText, setBreathtext] = useState("Click & Breath")
     const [showLevel, setShowLevel] = useState(false)
+    const [buttonDisable, setButtonDisable] = useState(false)
 
     const handleBreath = () => {
         setBreathtext("Collecting data ...")
+        setButtonDisable(true)
         setTimeout(() => {
             setShowLevel(true)
         }, 3000)
@@ -18,6 +20,7 @@ export default function KetonesBreath() {
     const handleBack = () => {
         if (showLevel) {
             setBreathtext("Click & Breath")
+            setButtonDisable(false)
             setShowLevel(false)
         }
     }
@@ -46,7 +49,7 @@ export default function KetonesBreath() {
                                     </View>
                                 </View>
                                 :
-                                <TouchableOpacity style={classes.Button} onPress={handleBreath}>
+                                <TouchableOpacity style={classes.Button} onPress={handleBreath} disabled={buttonDisable}>
                                     <Text style={classes.ButtonText}>{breathText}</Text>
                                 </TouchableOpacity>
 
