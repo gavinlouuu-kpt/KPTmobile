@@ -5,9 +5,11 @@ import { LineChart } from "react-native-chart-kit";
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-import { randomHeartRate, ArrayConvert } from "../utils";
+import { ArrayConvert } from "../utils";
 
 import { useAuth } from '../Authentication/AuthProvider';
+
+import { useBle } from './BleProvider';
 
 import Card from '../Card';
 
@@ -23,6 +25,8 @@ export default function HeartRate({ upload = false, creatorID = "" }) {
 
     const { database, currentUser } = useAuth()
 
+    const { data } = useBle();
+
     const [viewWidth, setViewWidth] = useState(0)
     const [viewHeight, setViewHeight] = useState(0)
 
@@ -30,26 +34,23 @@ export default function HeartRate({ upload = false, creatorID = "" }) {
     const [heartRateList, setHeartRateList] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) // number of point, current: 10
 
     useEffect(() => {
-        const randomRate = setInterval(() => {
-            /* THe random Heart rate function return a number, so just replay the function that the state of heart rate would be done*/
-            const temp = randomHeartRate() // !!! just remove the randomHeartRate() and put the type of number 
+        if (data !== null) {
             setHeartRateList(pre => {
                 let newArray = [...pre]
                 newArray.shift()
-                newArray.push(temp)
+                newArray.push(data)
                 return newArray
             })
-            setHeartRate(temp)
+            setHeartRate(data)
             if (upload) {
                 const ref = database.ref(`${creatorID}/user/${currentUser.uid}`)
                 ref.once('value').then((snap) => {
                     let numChildren = parseInt(snap.numChildren());
-                    ref.child("" + (numChildren)).set(temp)
+                    ref.child("" + (numChildren)).set(data)
                 })
             }
-        }, 1000)
-        return () => clearInterval(randomRate)
-    }, [randomHeartRate, currentUser, database, upload])
+        }
+    }, [currentUser, database, upload, data])
 
     return (
         <Card
